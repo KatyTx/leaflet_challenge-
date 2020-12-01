@@ -2,8 +2,8 @@ const API_KEY = "pk.eyJ1Ijoia3RtYXAxIiwiYSI6ImNraHBqNTF3YzAxNGcycW56Zzd2aWozZDki
 
 // Creating map object
 var myMap = L.map("mapid", {
-    center: [34.0522, -90.2437],
-    zoom: 3
+    center: [44, -90.2437],
+    zoom: 2
 });
 
 // Adding tile layer
@@ -69,7 +69,7 @@ L.control.layers(baseMaps, overlayMaps, {
 }).addTo(myMap);
 
 // Load in geojson data
-var link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson";
+var link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
 
 
 // Add a marker to the map for each crime
@@ -122,28 +122,18 @@ d3.json(link, function (response) {
     }).addTo(myMap);
 
     // Set up the legend
-    var legend = L.control({ position: "bottomright" });
+    var legend = L.control({ position: "bottomleft" });
     legend.onAdd = function () {
         var div = L.DomUtil.create("div", "info legend");
-        var limits = choroplethLayer.options.limits;
-        var colors = choroplethLayer.options.colors;
-        var labels = [];
+        var depth = ["-10", "10", "30", "50", "70", "90"];
+        var colors = ["green", "purple", "pink", "coral", "orange", "red"];
+        for (var i = 0; i < depth.length; i++) {
+            div.innerHTML += "<i style='background:" + colors[i] + "'></i>" + depth[i] + (depth[i + 1] ? "&ndash;" + depth[i + 1] +
+                "<br>" + "<br>" : "+");
+        }
 
-        // Adding legend to the map
-        legend.addTo(myMap);
-
-        // Add min & max to the html
-        div.innerHTML = "<h1>Median Income</h1>" +
-            "<div class=\"labels\">" +
-            "<div class=\"min\">" + limits[0] + "</div>" +
-            "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-            "</div>";
-
-        limits.forEach(function (limit, index) {
-            labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-        });
-
-        div.innerHTML += "<ul>" + labels.join("") + "</ul>";
         return div;
     };
+    // Adding legend to the map
+    legend.addTo(myMap);
 });
