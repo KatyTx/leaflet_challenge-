@@ -16,30 +16,6 @@ html {
   margin: 0;
 }
 
-/* .legend {
-  padding: 10 px; 
-  line-height: 20 px;
-  color: #555;
-  background-color: #ffffff;
-  border-radius: 5 px;
-}
-
-.legend i {
-  float: left;
-  width: 18 px; 
-  height: 20 px;
-  margin-right: 8px
-}
-.leaflet-bottom.leaflet-left{
-  width: 90%;
-
-}
-.leaflet-control-container .leaflet-timeline-controls{
-  width: 95%;
-  box-sizing: border-box;
-  margin-bottom: 10 px;
-} */
-
 .info {padding: 6px 8px;font: 14px/16px Arial, Helvetica, sans-serif;
   background: white;background: rgba(255,255,255,0.8);
   box-shadow: 0 0 15px rgba(0,0,0,0.2);border-radius: 5px;}

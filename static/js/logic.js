@@ -1,3 +1,4 @@
+//varies issues with config file so added to code instead
 const API_KEY = "pk.eyJ1Ijoia3RtYXAxIiwiYSI6ImNraHBqNTF3YzAxNGcycW56Zzd2aWozZDkifQ.CjRG0a4QlzXUOZBwp-SPzg";
 
 // Creating map object
@@ -7,13 +8,6 @@ var myMap = L.map("mapid", {
 });
 
 // Adding tile layer
-// var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-//     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-//     maxZoom: 18,
-//     id: "dark-v10",
-//     accessToken: API_KEY
-// }).addTo(myMap);
-
 var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
@@ -22,12 +16,6 @@ var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{
     id: "mapbox/satellite-v9",
     accessToken: API_KEY
 });
-
-// var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-//     maxZoom: 18,
-//     id: "streets-v11",
-//     accessToken: API_KEY
-// });
 
 var outdoormap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
@@ -57,8 +45,7 @@ outdoormap.addTo(myMap)
 
 var earthquakes = new L.LayerGroup()
 
-
-// Create overlay object to hold our overlay layer
+// Create overlay object to hold overlay layer
 var overlayMaps = {
     "Earthquakes": earthquakes
 };
@@ -72,7 +59,7 @@ L.control.layers(baseMaps, overlayMaps, {
 var link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
 
 
-// Add a marker to the map for each crime
+// Add a marker to the map for each earthquake
 d3.json(link, function (response) {
     function circleadd(features) {
         return {
@@ -106,7 +93,6 @@ d3.json(link, function (response) {
 
     }
 
-
     L.geoJSON(response, {
         pointToLayer: function (features, latlong) {
             return L.circleMarker(latlong);
@@ -115,9 +101,6 @@ d3.json(link, function (response) {
         onEachFeature: function (features, layer) {
             layer.bindPopup(`<h3> ${features.properties.place} </h3> <hr> <p> <h3> Mag: ${features.properties.mag} </h3> <hr>${(features.geometry.coordinates[2])} </p>`);
         }
-
-
-
 
     }).addTo(myMap);
 
@@ -134,6 +117,6 @@ d3.json(link, function (response) {
 
         return div;
     };
-    // Adding legend to the map
+    // Add legend to the map
     legend.addTo(myMap);
 });
